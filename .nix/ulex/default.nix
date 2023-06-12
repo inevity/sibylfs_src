@@ -30,7 +30,7 @@ stdenv.mkDerivation {
   meta = {
     homepage = http://www.cduce.org/download.html;
     description = "A lexer generator for Unicode and OCaml";
-    license = stdenv.lib.licenses.mit;
-    maintainers = [ stdenv.lib.maintainers.roconnor ];
+    license = pkgs.lib.licenses.mit;
+    maintainers = [ pkgs.lib.maintainers.roconnor ];
   };
 }

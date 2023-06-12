@@ -5,7 +5,7 @@ let
     fetchgit = pkgs.fetchgit;
     ocaml = pkgs.ocaml;
     findlib = pkgs.ocamlPackages.findlib; # needed?
-    ocaml_version = (stdenv.lib.getVersion ocaml);
+    ocaml_version = (pkgs.lib.getVersion ocaml);
 in 
 let 
     rresult = stdenv.mkDerivation {

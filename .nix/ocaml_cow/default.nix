@@ -3,14 +3,28 @@ let
     pkgs = import <nixpkgs> {};
     stdenv = pkgs.stdenv;
     fetchurl = pkgs.fetchurl;
-    ocaml = pkgs.ocaml;
-    op = pkgs.ocamlPackages;
+    #ocaml = pkgs.ocaml;
+    #op = pkgs.ocamlPackages;
+    op = pkgs.ocaml-ng.ocamlPackages_4_04;
+    ocaml = op.ocaml;
     findlib = op.findlib;
     dyntype = import ../dyntype { };
     omd = import ../omd { };
     ulex = import ../ulex { };
-    cstruct = op.cstruct;
-  ocaml_version = (stdenv.lib.getVersion ocaml);
+    minepkgs = import (builtins.fetchGit {
+        # Descriptive name to make the store path easier to identify                
+        name = "minepkgs";                                                 
+        url = "https://github.com/NixOS/nixpkgs/";                       
+        ref = "refs/heads/nixpkgs-unstable";                     
+        rev = "0c159930e7534aa803d5cf03b27d5c86ad6050b7";                                           
+     }) {};
+     
+    #cstruct = op.ppx_cstruct;
+    cstruct = minepkgs.ocamlPackages.ppx_cstruct;
+    xmlm = minepkgs.ocamlPackages.xmlm;
+    ezjsonm = minepkgs.ocamlPackages.ezjsonm;
+
+    ocaml_version = (pkgs.lib.getVersion ocaml);
     strace = 
       if stdenv.isDarwin then null else pkgs.strace;
 in stdenv.mkDerivation {
@@ -37,9 +51,12 @@ in stdenv.mkDerivation {
 
     camlp4=op.camlp4;
 
+    #buildInputs = [ ocaml findlib pkgs.which strace minepkgs.ocamlPackages.ounit2 ]; 
+    #buildInputs = [ ocaml findlib pkgs.which strace minepkgs.ocamlPackages.ounit ]; 
     buildInputs = [ ocaml findlib pkgs.which strace ]; 
   
-    propagatedBuildInputs = [ dyntype omd op.type_conv op.re ulex op.uri op.xmlm op.ezjsonm op.camlp4 cstruct ];
+    #propagatedBuildInputs = [ dyntype omd op.janeStreet_0_9_0.ppx_type_conv  op.re ulex minepkgs.ocamlPackages.uri op.xmlm op.ezjsonm op.camlp4 cstruct ];
+    propagatedBuildInputs = [ dyntype omd op.janeStreet_0_9_0.ppx_type_conv  op.re ulex minepkgs.ocamlPackages.uri xmlm ezjsonm op.camlp4 cstruct ];
 
    buildPhase = "
 export LD_LIBRARY_PATH=${cstruct}/lib/ocaml/${ocaml_version}/site-lib/cstruct

@@ -9,7 +9,7 @@ let
     lem_in_nix = import ../.nix/lem { };
     ocaml_cow = import ../.nix/ocaml_cow { };
     ocaml_dyntype = import ../.nix/dyntype { };
-    ocaml_version = (stdenv.lib.getVersion ocaml);
+    ocaml_version = (pkgs.lib.getVersion ocaml);
 in stdenv.mkDerivation {
 
     name = "fs_spec";

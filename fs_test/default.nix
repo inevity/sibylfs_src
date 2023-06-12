@@ -11,7 +11,7 @@ let
   ocaml_dyntype = import ../.nix/dyntype { };
   ocaml-unix-fcntl = import ../.nix/ocaml-unix-fcntl { };
   ocaml-unix-errno = import ../.nix/ocaml-unix-errno { };
-  ocaml_version = (stdenv.lib.getVersion ocaml);
+  ocaml_version = (pkgs.lib.getVersion ocaml);
   fs_spec = import ../fs_spec { };
 in 
 stdenv.mkDerivation {
