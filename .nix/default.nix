@@ -4,8 +4,10 @@ let
     stdenv = pkgs.stdenv;
     fetchgit = pkgs.fetchgit;
     perl = pkgs.perl;
-    ocaml = pkgs.ocaml;
-    op = pkgs.ocamlPackages;
+    #ocaml = pkgs.ocaml;
+    #op = pkgs.ocamlPackages;
+    op = pkgs.ocaml-ng.ocamlPackages_4_02;
+    ocaml = op.ocaml;
     findlib=op.findlib;
     cppo=op.cppo;
     sha = import ./sha { };

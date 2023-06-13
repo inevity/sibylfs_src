@@ -3,18 +3,29 @@ let
     pkgs = import <nixpkgs> {};
     stdenv = pkgs.stdenv;
     fetchgit = pkgs.fetchgit;
-    ocaml = pkgs.ocaml;
+    #ocaml = pkgs.ocaml;
+
     git = pkgs.git;
     findlib = pkgs.ocamlPackages.findlib; # needed?
+    op = pkgs.ocaml-ng.ocamlPackages_4_02;
+    ocaml = op.ocaml;
+
 #    isabelle = import ./../isabelle { }; # not needed?
 in stdenv.mkDerivation {
     name = "lem";
   
     src = fetchgit {
-      url = https://tomridge@bitbucket.org/tomridge/lem.git;
-      rev = "5b4a168"; 
-      sha256 = "19642yadi089p8si87n0rbn0mwwxyvzjrv33g848gaqy811i0zak";
+ #     url = https://tomridge@bitbucket.org/tomridge/lem.git;
+      #url = https://github.com/inevity/oldlem.git;
+      url = https://github.com/inevity/lem.git;
+#      rev = "5b4a168"; 
+      #rev = "a07c9f7"; 
+  #    sha256 = "19642yadi089p8si87n0rbn0mwwxyvzjrv33g848gaqy811i0zak";
+      #sha256 = "sha256-6OeD4AMHDKUfDhDCa6F8aee5nIHRfvK1t/G+oIiPYLg=";
+      sha256 = "sha256-6PB2zkkaRMuuRw6xjLh+ePyQ1u8xCrvMjtmNxFNY9/Y=";
     };
+    #why localsrc,need omaclbuild 
+#    src = ../../../sibylfs_lem/dsheets-lem-a1b986efffee/.;
   
     buildInputs = [ ocaml git pkgs.perl  ]; # isabelle pkgs.pkgconfig findlib 
   

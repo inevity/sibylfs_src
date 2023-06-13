@@ -4,9 +4,11 @@ let
     pkgs = import <nixpkgs> {};
     stdenv = pkgs.stdenv;
     fetchurl = pkgs.fetchurl;
-    ocaml = pkgs.ocaml;
-    op = pkgs.ocamlPackages;
+    #ocaml = pkgs.ocaml;
+    #op = pkgs.ocamlPackages;
+    op = pkgs.ocaml-ng.ocamlPackages_4_02;
     findlib=op.findlib;
+    ocaml = op.ocaml;
   ocaml_version = (builtins.parseDrvName ocaml.name).version;
   version = "1.1";
   pname = "ulex";
