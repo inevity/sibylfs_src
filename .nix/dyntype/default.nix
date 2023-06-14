@@ -1,7 +1,7 @@
 { }:
 let 
     pkgs = import <nixpkgs> {};
-    stdenv = pkgs.stdenv;
+    #stdenv = pkgs.stdenv;
     fetchurl = pkgs.fetchurl;
     #ocaml = pkgs.ocaml;
     #op = pkgs.ocamlPackages.ocaml-ng.ocamlPackages_4_00_1;
@@ -9,7 +9,7 @@ let
     #op = pkgs.ocaml-ng.ocamlPackages_4_02;
     #op = pkgs.ocaml-ng.ocamlPackages_4_03;
     op = pkgs.ocaml-ng.ocamlPackages_4_02;
-    ocaml = op.ocaml;
+    #ocaml = op.ocaml;
     minepkgs = import (builtins.fetchGit {
          # Descriptive name to make the store path easier to identify                
          name = "mine1402";                                                 
@@ -18,8 +18,16 @@ let
          rev = "a5c9c6373aa35597cd5a17bc5c013ed0ca462cf0";                                           
      }) {};                                                                           
 
+     #type_conv = minepkgs.ocamlPackages.type_conv_108_08_00;
+     #       error: type_conv-108.08.00 is not available for OCaml 4.05.0 ? who
+     #       set?
      type_conv = minepkgs.ocamlPackages.type_conv;
-     findlib = op.findlib;
+     #findlib = op.findlib;
+     findlib = minepkgs.ocamlPackages.findlib;
+     ocaml = minepkgs.ocamlPackages.ocaml;
+     stdenv = minepkgs.stdenv;
+     ocamlbuild = minepkgs.ocamlPackages.ocamlbuild;
+     camlp4 = minepkgs.ocamlPackages.camlp4;
      #findlib = minepkgs.ocamlPackages.findlib;
     #op = pkgs.ocaml-ng.ocamlPackages_3_12_1;
     
@@ -39,7 +47,7 @@ in stdenv.mkDerivation {
 
     #buildInputs = [ ocaml op.findlib op.type_conv pkgs.which op.camlp4 ]; 
     #buildInputs = [ ocaml op.findlib type_conv pkgs.which op.camlp4 ]; 
-    buildInputs = [ ocaml findlib type_conv pkgs.which op.camlp4 ]; 
+    buildInputs = [ ocaml findlib ocamlbuild  type_conv pkgs.which camlp4 ]; 
 
   
     createFindlibDestdir = true;

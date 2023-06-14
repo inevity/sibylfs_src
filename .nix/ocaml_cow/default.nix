@@ -1,16 +1,13 @@
 { }:
 let 
     pkgs = import <nixpkgs> {};
-    stdenv = pkgs.stdenv;
+    #stdenv = pkgs.stdenv;
     fetchurl = pkgs.fetchurl;
     #ocaml = pkgs.ocaml;
     #op = pkgs.ocamlPackages;
     op = pkgs.ocaml-ng.ocamlPackages_4_02;
-    ocaml = op.ocaml;
+    #ocaml = op.ocaml;
     findlib = op.findlib;
-    dyntype = import ../dyntype { };
-    omd = import ../omd { };
-    ulex = import ../ulex { };
 #    minepkgs = import (builtins.fetchGit {
 #        # Descriptive name to make the store path easier to identify                
 #        name = "minepkgs";                                                 
@@ -32,10 +29,17 @@ let
     }) {};                                                                           
 
     type_conv = mine.ocamlPackages.type_conv;
-    cstruct = mine.ocamlPackages.ppx_cstruct;
+    #cstruct = mine.ocamlPackages.ppx_cstruct;
+    cstruct = mine.ocamlPackages.cstruct;
     xmlm = mine.ocamlPackages.xmlm;
+    ocaml = mine.ocamlPackages.ocaml;
+    stdenv = mine.stdenv;
 
     ezjsonm = mine.ocamlPackages.ezjsonm;
+    uri = mine.ocamlPackages.uri;
+    dyntype = import ../dyntype { };
+    omd = import ../omd { };
+    ulex = import ../ulex { };
 
     ocaml_version = (pkgs.lib.getVersion ocaml);
     strace = 
@@ -70,7 +74,7 @@ in stdenv.mkDerivation {
   
     #propagatedBuildInputs = [ dyntype omd op.janeStreet_0_9_0.ppx_type_conv  op.re ulex minepkgs.ocamlPackages.uri op.xmlm op.ezjsonm op.camlp4 cstruct ];
     #propagatedBuildInputs = [ dyntype omd op.janeStreet_0_9_0.ppx_type_conv  op.re ulex minepkgs.ocamlPackages.uri xmlm ezjsonm op.camlp4 cstruct ];
-    propagatedBuildInputs = [ dyntype omd type_conv  op.re ulex mine.ocamlPackages.uri xmlm ezjsonm op.camlp4 cstruct ];
+    propagatedBuildInputs = [ dyntype omd type_conv  op.re ulex uri xmlm ezjsonm op.camlp4 cstruct ];
 
    buildPhase = "
 export LD_LIBRARY_PATH=${cstruct}/lib/ocaml/${ocaml_version}/site-lib/cstruct

@@ -6,8 +6,18 @@ let
     fetchgithub = pkgs.fetchFromGitHub;
   #  ocaml = pkgs.ocaml;
   #  op = pkgs.ocamlPackages;
-    op = pkgs.ocaml-ng.ocamlPackages_4_02;
-    ocaml = op.ocaml;
+   # op = pkgs.ocaml-ng.ocamlPackages_4_02;
+   # ocaml = op.ocaml;
+    minepkgs = import (builtins.fetchGit {
+         # Descriptive name to make the store path easier to identify                
+         name = "mine1402";                                                 
+         url = "https://github.com/NixOS/nixpkgs/";                       
+         ref = "refs/heads/nixpkgs-unstable";                     
+         rev = "a5c9c6373aa35597cd5a17bc5c013ed0ca462cf0";                                           
+     }) {};                                                                           
+     ocaml = minepkgs.ocamlPackages.ocaml;
+     findlib = minepkgs.ocamlPackages.findlib;
+
 in stdenv.mkDerivation {
     name = "ocaml_omd";
   
@@ -25,7 +35,7 @@ in stdenv.mkDerivation {
       sha256 = "0A9N6IwvE0uTcFKkceds2rZ9YXx/RvB4SOusYaMGwc0=";
     };
   
-    buildInputs = [ ocaml op.findlib  ]; 
+    buildInputs = [ ocaml findlib  ]; 
  
     configurePhase="
     mkdir -p $out/bin
