@@ -15,17 +15,20 @@ let
          ref = "refs/heads/nixpkgs-unstable";                     
          rev = "a5c9c6373aa35597cd5a17bc5c013ed0ca462cf0";                                           
      }) {};                                                                           
-    findlib = mine.ocamlPackages.findlib;
-    ocaml = mine.ocamlPackages.ocaml;
+    #findlib = mine.ocamlPackages.findlib;
+    #ocaml = mine.ocamlPackages.ocaml;
+     findlib = mine.ocamlPackages_4_02.findlib;
+     #ocaml = minepkgs.ocamlPackages.ocaml_4_02;
+     ocaml = mine.ocaml_4_02;
 
     stdenv = mine.stdenv;
 
     ocaml-unix-errno = import ../ocaml-unix-errno { } ;
-    #ctypes = mine.ocamlPackages.ctypes;
-    ctypes = import ../ocaml_ctypes { } ;
+    ctypes = mine.ocamlPackages_4_02.ctypes;
+    #ctypes = import ../ocaml_ctypes { } ;
     # or use propagete, lost the camplp4 
-    camlp4 = mine.ocamlPackages.camlp4;
-    ocamlbuild = mine.ocamlPackages.ocamlbuild;
+    camlp4 = mine.ocamlPackages_4_02.camlp4;
+    ocamlbuild = mine.ocamlPackages_4_02.ocamlbuild;
     #why must define here, direct use is not ok?
     #ctypes = op.ctypes;
 in stdenv.mkDerivation {

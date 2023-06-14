@@ -39,10 +39,10 @@ in stdenv.mkDerivation {
     src = fetchurl {
       #url = https://github.com/mirage/ocaml-cow/archive/v1.2.1.tar.gz;
       #sha256 = "c9ae1f0be8ca2fb37673e89c5e5f1a4cfb70d7cfa7e99322ca49592431434ba0";
-       url = https://github.com/yallop/ocaml-ctypes/archive/refs/tags/0.9.4.tar.gz;
-      sha256 = "4UwsOiPsfiHyB5ZSwjwwnNfPuVguvCl1AHopyIzm+A0=";
-      #url = https://github.com/yallop/ocaml-ctypes/archive/refs/tags/0.9.3.tar.gz;
-      #sha256 = "rd0vSjF/x8gYm0fL1gXphKGRwmLNr+dJO5vgBwm9YEU=";
+      #url = https://github.com/yallop/ocaml-ctypes/archive/refs/tags/0.9.4.tar.gz;
+      #sha256 = "4UwsOiPsfiHyB5ZSwjwwnNfPuVguvCl1AHopyIzm+A0=";
+      url = https://github.com/yallop/ocaml-ctypes/archive/refs/tags/0.9.3.tar.gz;
+      sha256 = "rd0vSjF/x8gYm0fL1gXphKGRwmLNr+dJO5vgBwm9YEU=";
     };
   
     #buildInputs = [ ocaml findlib pkgs.which strace base-bytes conf-pkg-config  ]; 

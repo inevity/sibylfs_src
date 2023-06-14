@@ -2,7 +2,7 @@
 
 let
     pkgs = import <nixpkgs> {};
-    stdenv = pkgs.stdenv;
+    #stdenv = pkgs.stdenv;
     fetchurl = pkgs.fetchurl;
     #ocaml = pkgs.ocaml;
     #op = pkgs.ocamlPackages;
@@ -19,8 +19,10 @@ let
          ref = "refs/heads/nixpkgs-unstable";                     
          rev = "a5c9c6373aa35597cd5a17bc5c013ed0ca462cf0";                                           
      }) {};                                                                           
-     ocaml = minepkgs.ocamlPackages.ocaml;
-     findlib = minepkgs.ocamlPackages.findlib;
+     ocaml = minepkgs.ocamlPackages_4_02.ocaml;
+     findlib = minepkgs.ocamlPackages_4_02.findlib;
+     camlp4 = minepkgs.ocamlPackages_4_02.camlp4;
+     stdenv = minepkgs.stdenv;
 
 
 in
@@ -35,7 +37,7 @@ stdenv.mkDerivation {
 
   createFindlibDestdir = true;
 
-  buildInputs = [ocaml findlib];
+  buildInputs = [ocaml findlib camlp4];
 
   buildFlags = "all all.opt";
 

@@ -1,7 +1,7 @@
 { }:
 let 
     pkgs = import <nixpkgs> {};
-    stdenv = pkgs.stdenv;
+#    stdenv = pkgs.stdenv;
     fetchurl = pkgs.fetchurl;
     fetchgithub = pkgs.fetchFromGitHub;
   #  ocaml = pkgs.ocaml;
@@ -15,8 +15,17 @@ let
          ref = "refs/heads/nixpkgs-unstable";                     
          rev = "a5c9c6373aa35597cd5a17bc5c013ed0ca462cf0";                                           
      }) {};                                                                           
+     #ocaml = minepkgs.ocamlPackages_4_02.ocaml;
+     #opam = minepkgs.opam;
+     #findlib = minepkgs.ocamlPackages_4_02.findlib;
+     #stdenv = minepkgs.stdenv;
+     #topfind = minepkgs.ocamlPackages_4_02.topfind;
      ocaml = minepkgs.ocamlPackages.ocaml;
+     opam = minepkgs.opam;
      findlib = minepkgs.ocamlPackages.findlib;
+     stdenv = minepkgs.stdenv;
+     #topfind = minepkgs.ocamlPackages.topfind;
+     
 
 in stdenv.mkDerivation {
     name = "ocaml_omd";
@@ -35,7 +44,8 @@ in stdenv.mkDerivation {
       sha256 = "0A9N6IwvE0uTcFKkceds2rZ9YXx/RvB4SOusYaMGwc0=";
     };
   
-    buildInputs = [ ocaml findlib  ]; 
+    #buildInputs = [ ocaml findlib opam topfind ]; 
+    buildInputs = [ ocaml findlib opam]; 
  
     configurePhase="
     mkdir -p $out/bin

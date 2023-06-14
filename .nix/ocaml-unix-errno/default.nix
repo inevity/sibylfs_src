@@ -20,11 +20,14 @@ let
          ref = "refs/heads/nixpkgs-unstable";                     
          rev = "a5c9c6373aa35597cd5a17bc5c013ed0ca462cf0";                                           
      }) {};                                                                           
-    findlib = mine.ocamlPackages.findlib;
-    ocaml = mine.ocamlPackages.ocaml;
+    #findlib = mine.ocamlPackages.findlib;
+    #ocaml = mine.ocamlPackages.ocaml;
+     findlib = mine.ocamlPackages_4_02.findlib;
+     #ocaml = minepkgs.ocamlPackages.ocaml_4_02;
+     ocaml = mine.ocaml_4_02;
 
-    camlp4 = mine.ocamlPackages.camlp4;
-    result = mine.ocamlPackages.result;
+    camlp4 = mine.ocamlPackages_4_02.camlp4;
+    result = mine.ocamlPackages_4_02.result;
 
     #ctypes = mine.ocamlPackages.ctypes;
     ctypes = import ../ocaml_ctypes { } ;
@@ -32,7 +35,7 @@ let
     #ctypes too new??
 #    stubs = ctypes.stubs;
     stdenv = mine.stdenv;
-    ocamlbuild = mine.ocamlPackages.ocamlbuild;
+    ocamlbuild = mine.ocamlPackages_4_02.ocamlbuild;
 in 
 #let 
 #    rresult = stdenv.mkDerivation {

@@ -1,14 +1,31 @@
 { }:
 let 
     pkgs = import <nixpkgs> {};
-    stdenv = pkgs.stdenv;
+    #stdenv = pkgs.stdenv;
     fetchurl = pkgs.fetchurl;
     fetchgithub = pkgs.fetchFromGitHub;
     op = pkgs.ocaml-ng.ocamlPackages_4_02;
-    ocaml = op.ocaml;
+    #ocaml = op.ocaml;
     #ocaml = pkgs.ocaml;
     #findlib = pkgs.ocamlPackages.findlib; # needed?
-    findlib = op.findlib;
+    #findlib = op.findlib;
+    minepkgs = import (builtins.fetchGit {
+         # Descriptive name to make the store path easier to identify                
+         name = "mine1402";                                                 
+         url = "https://github.com/NixOS/nixpkgs/";                       
+         ref = "refs/heads/nixpkgs-unstable";                     
+         rev = "a5c9c6373aa35597cd5a17bc5c013ed0ca462cf0";                                           
+     }) {};                                                                           
+
+     #type_conv = minepkgs.ocamlPackages.type_conv_108_08_00;
+     #       error: type_conv-108.08.00 is not available for OCaml 4.05.0 ? who
+     #       set?
+     #type_conv = minepkgs.ocamlPackages.type_conv;
+     #findlib = op.findlib;
+     findlib = minepkgs.ocamlPackages_4_02.findlib;
+     #ocaml = minepkgs.ocamlPackages.ocaml_4_02;
+     ocaml = minepkgs.ocaml_4_02;
+     stdenv = minepkgs.stdenv;
 in stdenv.mkDerivation {
     name = "ocaml_fd-send-recv";
   
