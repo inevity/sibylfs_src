@@ -21,13 +21,13 @@ let
      #type_conv = minepkgs.ocamlPackages.type_conv_108_08_00;
      #       error: type_conv-108.08.00 is not available for OCaml 4.05.0 ? who
      #       set?
-     type_conv = minepkgs.ocamlPackages.type_conv;
+     type_conv = minepkgs.ocamlPackages_4_02.type_conv;
      #findlib = op.findlib;
-     findlib = minepkgs.ocamlPackages.findlib;
-     ocaml = minepkgs.ocamlPackages.ocaml;
+     findlib = minepkgs.ocamlPackages_4_02.findlib;
+     ocaml = minepkgs.ocamlPackages_4_02.ocaml;
      stdenv = minepkgs.stdenv;
-     ocamlbuild = minepkgs.ocamlPackages.ocamlbuild;
-     camlp4 = minepkgs.ocamlPackages.camlp4;
+     ocamlbuild = minepkgs.ocamlPackages_4_02.ocamlbuild;
+     camlp4 = minepkgs.ocamlPackages_4_02.camlp4;
      #findlib = minepkgs.ocamlPackages.findlib;
     #op = pkgs.ocaml-ng.ocamlPackages_3_12_1;
     

@@ -22,15 +22,15 @@ let
      #topfind = minepkgs.ocamlPackages_4_02.topfind;
      ocaml = minepkgs.ocamlPackages_4_02.ocaml;
      opam = minepkgs.opam;
-     #findlib = minepkgs.ocamlPackages_4_02.findlib;
+     findlib = minepkgs.ocamlPackages_4_02.findlib;
     # ocamlfind = minepkgs.ocamlPackages_4_02.ocamlfind;
      #findlib = minepkgs.ocamlPackages.findlib;
-     findlib = pkgs.ocamlPackages.findlib;
+     #findlib = pkgs.ocamlPackages.findlib;
      #op = pkgs.ocaml-ng.ocamlPackages_4_02;
      #findlib = op.findlib;
 
-     #stdenv = minepkgs.stdenv;
-     stdenv = pkgs.stdenv;
+     stdenv = minepkgs.stdenv;
+     #stdenv = pkgs.stdenv;
     # camlp4 = minepkgs.ocamlPackages_4_02.camlp4;
      camlp4 = minepkgs.ocamlPackages_4_02.camlp4;
      ocamlbuild = minepkgs.ocamlPackages_4_02.ocamlbuild;
@@ -83,18 +83,37 @@ in stdenv.mkDerivation {
     #make all
     #make configure
     #topfind not find 
+    #ocaml -I $OCAML_TOPLEVEL_PATH -I $CAML_LD_LIBRARY_PATH  setup.ml -configure
+    #ocaml setup.ml -configure `opam config var prefix` 
+
+#below install why need /usr create?
+
     configurePhase="
-    ocaml -I $OCAML_TOPLEVEL_PATH -I $CAML_LD_LIBRARY_PATH  setup.ml -configure
+    oasis setup
+    ocaml setup.ml -configure --prefix $out 
 ";
 ##
-    #ocaml setup.ml -configure
+    #ocaml setup.ml -configure --prefix $out
  buildPhase = ''
-    ocaml -I $OCAML_TOPLEVEL_PATH -I $CAML_LD_LIBRARY_PATH setup.ml -build
+    ocaml  setup.ml -build
 '';
 
  installPhase = ''
-    ocaml -I $OCAML_TOPLEVEL_PATH -I $CAML_LD_LIBRARY_PATH setup.ml -install 
+    ocaml setup.ml -install --prefix $out 
 '';
+
+
+#    configurePhase="
+#";
+###
+#    #ocaml setup.ml -configure
+# buildPhase = ''
+#    cd src
+#    make all 
+#    ls -lath
+#'';
+
+#mkdir -p $out/lem && cp -R -L * $out/lem
 
     createFindlibDestdir = true;
 

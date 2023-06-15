@@ -15,7 +15,7 @@ let
 
     stdenv = mine.stdenv;
 
-    camlp4 = mine.ocamlPackages.camlp4;
+    #camlp4 = mine.ocamlPackages.camlp4;
     ocamlbuild = mine.ocamlPackages_4_02.ocamlbuild;
     ocaml = mine.ocamlPackages_4_02.ocaml;
     ocaml_version = (pkgs.lib.getVersion ocaml);
