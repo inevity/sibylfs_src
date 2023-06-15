@@ -16,10 +16,10 @@ let
        rev = "a5c9c6373aa35597cd5a17bc5c013ed0ca462cf0";                                           
    }) {};                                                                           
 
-  cstruct = minepkgs.ocamlPackages.cstruct;
-  sexplib = minepkgs.ocamlPackages.sexplib;
-  cmdliner = minepkgs.ocamlPackages.cmdliner;
-  menhir = minepkgs.ocamlPackages.menhir;
+  cstruct = minepkgs.ocamlPackages_4_02.cstruct;
+  sexplib = minepkgs.ocamlPackages_4_02.sexplib;
+  cmdliner = minepkgs.ocamlPackages_4_02.cmdliner;
+  menhir = minepkgs.ocamlPackages_4_02.menhir;
   sha = import ../.nix/sha { };
   fd_send_recv = import ../.nix/fd-send-recv { };
   lem_in_nix = import ../.nix/lem { };
@@ -30,7 +30,7 @@ let
   ocaml_version = (pkgs.lib.getVersion ocaml);
   fs_spec = import ../fs_spec { };
   stdenv = minepkgs.stdenv;
-  ocaml = minepkgs.ocamlPackages.ocaml;
+  ocaml = minepkgs.ocamlPackages_4_02.ocaml;
   #ctypes = minepkgs.ocamlPackages.ctypes;
   ctypes = import ../.nix/ocaml_ctypes { } ;
 in 

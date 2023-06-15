@@ -28,15 +28,15 @@ let
          rev = "a5c9c6373aa35597cd5a17bc5c013ed0ca462cf0";                                           
     }) {};                                                                           
 
-    type_conv = mine.ocamlPackages.type_conv;
+    type_conv = mine.ocamlPackages_4_02.type_conv;
     #cstruct = mine.ocamlPackages.ppx_cstruct;
-    cstruct = mine.ocamlPackages.cstruct;
-    xmlm = mine.ocamlPackages.xmlm;
-    ocaml = mine.ocamlPackages.ocaml;
+    cstruct = mine.ocamlPackages_4_02.cstruct;
+    xmlm = mine.ocamlPackages_4_02.xmlm;
+    ocaml = mine.ocamlPackages_4_02.ocaml;
     stdenv = mine.stdenv;
 
-    ezjsonm = mine.ocamlPackages.ezjsonm;
-    uri = mine.ocamlPackages.uri;
+    ezjsonm = mine.ocamlPackages_4_02.ezjsonm;
+    uri = mine.ocamlPackages_4_02.uri;
     dyntype = import ../dyntype { };
     omd = import ../omd { };
     ulex = import ../ulex { };

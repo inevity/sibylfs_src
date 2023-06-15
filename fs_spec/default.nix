@@ -15,13 +15,13 @@ let
          rev = "a5c9c6373aa35597cd5a17bc5c013ed0ca462cf0";                                           
      }) {};                                                                           
 
-    cstruct = minepkgs.ocamlPackages.cstruct;
-    sexplib = minepkgs.ocamlPackages.sexplib;
-    cmdliner = minepkgs.ocamlPackages.cmdliner;
-    menhir = minepkgs.ocamlPackages.menhir;
-    findlib = minepkgs.ocamlPackages.findlib;
-    cppo = minepkgs.ocamlPackages.cppo;
-    ocaml = minepkgs.ocamlPackages.ocaml;
+    cstruct = minepkgs.ocamlPackages_4_02.cstruct;
+    sexplib = minepkgs.ocamlPackages_4_02.sexplib;
+    cmdliner = minepkgs.ocamlPackages_4_02.cmdliner;
+    menhir = minepkgs.ocamlPackages_4_02.menhir;
+    findlib = minepkgs.ocamlPackages_4_02.findlib;
+    cppo = minepkgs.ocamlPackages_4_02.cppo;
+    ocaml = minepkgs.ocamlPackages_4_02.ocaml;
     sha = import ../.nix/sha { };
     fd_send_recv = import ../.nix/fd-send-recv { };
     lem_in_nix = import ../.nix/lem { };
@@ -29,6 +29,8 @@ let
     ocaml_dyntype = import ../.nix/dyntype { };
     stdenv = minepkgs.stdenv;
     ocaml_version = (pkgs.lib.getVersion ocaml);
+    camlp4 = minepkgs.ocamlPackages_4_02.camlp4;
+
 in stdenv.mkDerivation {
 
     name = "fs_spec";
@@ -36,7 +38,7 @@ in stdenv.mkDerivation {
     src = ./.;  
 
     # git for version num    
-    buildInputs = [ ocaml findlib cppo sexplib sha cmdliner fd_send_recv 
+    buildInputs = [ ocaml findlib camlp4 cppo sexplib sha cmdliner fd_send_recv 
       lem_in_nix pkgs.coreutils pkgs.git menhir ocaml_cow ]; 
   
     cppo="${cppo}/bin/cppo";

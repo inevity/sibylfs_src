@@ -36,6 +36,7 @@ let
 #    stubs = ctypes.stubs;
     stdenv = mine.stdenv;
     ocamlbuild = mine.ocamlPackages_4_02.ocamlbuild;
+    ocaml_version = (pkgs.lib.getVersion ocaml);
 in 
 #let 
 #    rresult = stdenv.mkDerivation {
@@ -84,7 +85,8 @@ stdenv.mkDerivation {
     #Locally-open F in each 'foreign' binding. (#9)
     src = fetchgit {
       url = https://github.com/dsheets/ocaml-unix-errno.git;
-      rev = "64a853e";
+      #0.4.1
+      rev = "64a853ec4d722ca43d8b07f76f3557781e9bdfeb";
       #sha256 = "0pf54p7pcvbxhszh7scsw81m8p2yl7l3mqpy7mxz9nygaq6xibrp";
       sha256 = "U0ITe+uyjsDlVOmJ/P7no/EPmG+0vuuaoA1VnroskOw=";
     };
@@ -105,8 +107,9 @@ stdenv.mkDerivation {
 #/nix/store/g1fbj39vnznxiby58d2b5112n2zrg8mg-ocaml-ctypes-0.13.1/lib/ocaml/4.05.0/site-lib/ctypes/dllctypes_stubs.so
 #/nix/store/cbjv2hp852999a1z258lrw1d853i8l9g-ocaml_ctypes/lib/ocaml/4.05.0/site-lib/ctypes/dllctypes_stubs.so
 #export LD_LIBRARY_PATH=${ctypes}/lib/ocaml/${ocaml_version}/site-lib/ctypes
+#TODO fix ctypes for 402
    buildPhase = "
-export LD_LIBRARY_PATH=${ctypes}/lib/ocaml/4.05.0/site-lib/ctypes/
+export LD_LIBRARY_PATH=${ctypes}/lib/ocaml/${ocaml_version}/site-lib/ctypes/
 make build
 ";
 
