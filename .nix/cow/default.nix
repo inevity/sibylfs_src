@@ -104,7 +104,7 @@ let
 
 
 in stdenv.mkDerivation {
-    name = "ocaml_cow";
+    name = "cow";
   
 #    src = fetchurl {
 #      url = https://github.com/mirage/ocaml-cow/archive/v1.2.1.tar.gz;
@@ -208,16 +208,19 @@ in stdenv.mkDerivation {
   #'';
    configurePhase=''
    export PREFIX=$out
-   DESTDIR=$out ./cmd configure
+   DESTDIR="$out/lib/ocaml/${ocaml_version}/site-lib" ./cmd configure
    '';
    buildPhase=''
-   DESTDIR=$out ./cmd build
+   DESTDIR=$out/lib/ocaml/${ocaml_version}/site-lib ./cmd build
    '';
-   preInstall = ''mkdir -p "$out/cow" '';
+
+   preInstall = ''mkdir -p "$out/lib/ocaml/${ocaml_version}/site-lib/cow" '';
+
    installPhase=''
-   DESTDIR=$out ./cmd install
+   DESTDIR=$out/lib/ocaml/${ocaml_version}/site-lib ./cmd install
    '';
-   DESTDIR="$out";
+
+   DESTDIR="$out/lib/ocaml/${ocaml_version}/site-lib";
    NIX_DEBUG = 6;
 #    installPhase="true";
 #    configurePhase="

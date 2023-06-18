@@ -31,7 +31,8 @@ let
     sha = import ../.nix/sha { };
     fd_send_recv = import ../.nix/fd-send-recv { };
     lem_in_nix = import ../.nix/lem { };
-    ocaml_cow = import ../.nix/ocaml_cow { };
+    #ocaml_cow = import ../.nix/ocaml_cow { };
+    cow = import ../.nix/cow { };
     ocaml_dyntype = import ../.nix/dyntype { };
     stdenv = minepkgs.stdenv;
     ocaml_version = (pkgs.lib.getVersion ocaml);
@@ -160,7 +161,7 @@ in stdenv.mkDerivation {
     #buildInputs = [ ocaml findlib camlp4 cppo sexplib sha cmdliner fd_send_recv 
     #buildInputs = [ ocaml findlib camlp4 cppon sexplib sha cmdliner fd_send_recv 
     buildInputs = [ ocaml findlib camlp4 cppon pa_sexp_conv sha cmdliner fd_send_recv 
-      lem_in_nix pkgs.coreutils pkgs.git menhir ocaml_cow bash ]; 
+      lem_in_nix pkgs.coreutils pkgs.git menhir cow bash ]; 
 
     #propagatedBuildInputs = [ pa_sexp_conv ];  
   

@@ -25,7 +25,7 @@ let
   fd_send_recv = import ../.nix/fd-send-recv { };
   lem_in_nix = import ../.nix/lem { };
   #ocaml_cow = import ../.nix/ocaml_cow { };
-  cow = import ../.nix/ocaml_cow { };
+  cow = import ../.nix/cow { };
   ocaml_dyntype = import ../.nix/dyntype { };
   ocaml-unix-fcntl = import ../.nix/ocaml-unix-fcntl { };
   ocaml-unix-errno = import ../.nix/ocaml-unix-errno { };
