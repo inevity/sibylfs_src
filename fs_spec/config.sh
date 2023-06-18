@@ -23,9 +23,10 @@ cppo=/nix/store/gdndpj78qb82lmcnwyhiy3i3ss0bas8q-cppon/bin/cppo
 
 # may or may not be needed; needed when using nix dependencies, but
 # building manually
-LD_LIBRARY_PATH=/nix/store/gjc187wilf18d45c87s59xiqxb5vwisf-ocaml-cstruct-1.6.0/lib/ocaml/4.01.0/site-lib/cstruct
+#LD_LIBRARY_PATH=/nix/store/gjc187wilf18d45c87s59xiqxb5vwisf-ocaml-cstruct-1.6.0/lib/ocaml/4.01.0/site-lib/cstruct
 
 DISABLE_BYTE=true
 
 # needed?
-export lem LEMLIB EXTRACTDIR cppo LD_LIBRARY_PATH DISABLE_BYTE
+#export lem LEMLIB EXTRACTDIR cppo LD_LIBRARY_PATH DISABLE_BYTE
+export lem LEMLIB EXTRACTDIR cppo  DISABLE_BYTE

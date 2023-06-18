@@ -1,8 +1,11 @@
-SHELL:=/bin/bash
+#@SHELL:=/bin/bash
+#@SHELL:=${CONFIG_SHELL}
 
 # bash will read this config file first
-BASH_ENV=bash_env.sh
-export BASH_ENV
+#BASH_ENV=bash_env.sh
+#export BASH_ENV
+#from_lem:=$EXTRACTDIR/*.cmi $EXTRACTDIR/extract.*
+
 
 NATIVES:=debug/check2.native debug/debug.native paths/testpath.native fs_test_check fs_test_posix fs_test run_trace test_generation/tgen 
 

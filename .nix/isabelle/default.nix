@@ -4,12 +4,20 @@
 
 let 
     pkgs = import <nixpkgs> {};
-    stdenv = pkgs.stdenv;
+    #stdenv = pkgs.stdenv;
     fetchurl = pkgs.fetchurl;
     perl = pkgs.perl;
     nettools = pkgs.nettools;
 #    java = pkgs.jre;
 #    polyml = pkgs.polyml;
+    minepkgs = import (builtins.fetchGit {
+         # Descriptive name to make the store path easier to identify                
+         name = "mine1402";                                                 
+         url = "https://github.com/NixOS/nixpkgs/";                       
+         ref = "refs/heads/nixpkgs-unstable";                     
+         rev = "a5c9c6373aa35597cd5a17bc5c013ed0ca462cf0";                                           
+     }) {};                                                                           
+     stdenv = minepkgs.stdenv;
 #    proofgeneral = pkgs.emacs24Packages.proofgeneral;
 
 in

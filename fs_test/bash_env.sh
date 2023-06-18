@@ -1,11 +1,12 @@
-set -a # export all vars
+#set -a # export all vars
 # set -x # debug
 
-BASH_DIR=$(realpath $(dirname $BASH_SOURCE))
+BASH_DIR=$(realpath $(dirname $BASH_SOURCE[0]))
 ROOT=$BASH_DIR/..
 
-test -f $ROOT/config.sh && source $ROOT/config.sh
+#test -f $ROOT/config.sh && source $ROOT/config.sh
 
+#export SPEC_BUILD="${SPEC_BUILD:-$ROOT/fs_spec/_build}" # default if not set
 SPEC_BUILD="${SPEC_BUILD:-$ROOT/fs_spec/_build}" # default if not set
 
 # cmis from elsewhere
@@ -32,7 +33,7 @@ CCFLAGS="-g"
 WITH_FS_CHECK_LIB="-I $BASH_DIR/lib fs_check_lib.cmxa"
 
 # FIXME we should include fs_check_lib when we know it has been built
-  ocamlc="$DISABLE_BYTE ocamlfind ocamlc   $WARN $CCFLAGS $PKGS -I $BASH_DIR/include extract.cma  fs_spec_lib.cma $SYNTAX"
+ ocamlc="$DISABLE_BYTE ocamlfind ocamlc   $WARN $CCFLAGS $PKGS -I $BASH_DIR/include extract.cma  fs_spec_lib.cma $SYNTAX"
 ocamlopt="$DISABLE_NTVE ocamlfind ocamlopt $WARN $CCFLAGS $PKGS -I $BASH_DIR/include extract.cmxa fs_spec_lib.cmxa $SYNTAX"
 ocamldep="ocamlfind ocamldep $WARN $CCFLAGS $PKGS -I $BASH_DIR/include extract.cmxa fs_spec_lib.cmxa $SYNTAX $FCLXA"
 

@@ -15,7 +15,7 @@ let
     #so use the ctypes 0.13.1
     mine = import (builtins.fetchGit {
          # Descriptive name to make the store path easier to identify                
-         name = "mine402";                                                 
+         name = "mine1402";                                                 
          url = "https://github.com/NixOS/nixpkgs/";                       
          ref = "refs/heads/nixpkgs-unstable";                     
          rev = "a5c9c6373aa35597cd5a17bc5c013ed0ca462cf0";                                           

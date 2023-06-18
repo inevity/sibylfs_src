@@ -1,9 +1,9 @@
-# -*- mode: makefile -*-
-SHELL:=/bin/bash
-
-# bash will read this config file first
-BASH_ENV=bash_env.sh
-export BASH_ENV
+## -*- mode: makefile -*-
+#SHELL:=/bin/bash
+#
+## bash will read this config file first
+#BASH_ENV=bash_env.sh
+#export BASH_ENV
 
 ########################################################################
 # srcs
@@ -17,10 +17,15 @@ srcs: fs_lr_parser.mli fs_lr_parser.ml fs_lexer.ml fs_test_version.ml
 FS_AST_MLIS:=diff.mli fs_path.mli dump.mli fs_ast.mli
 
 fs_ast.cmi: $(FS_AST_MLIS)
-	(export DISABLE_NTVE=""; $$ocamlopt -c $(FS_AST_MLIS))
+	(export DISABLE_NTVE=""; $$lib_ocamlopt -c $(FS_AST_MLIS))
 
+  #menhir --explain --infer --ocamlc "ocamlfind ocamlc -package unix,bigarray,str,num,bytes,sexplib,sexplib.syntax,cmdliner,fd-send-recv,sha,cow,cow.syntax,unix-fcntl -I ../include -syntax camlp4o" $@
+	#run_menhir $<
+
+   #menhir --explain --infer --ocamlc 'ocamlfind ocamlc -package unix,bigarray,str,num,bytes,pa_sex_conv,cmdliner,fd-send-recv,sha,cow,cow.syntax,unix-fcntl -I ../include -syntax camlp4o' fs_lr_parser.mly
+	#menhir --explain --infer --ocamlc "ocamlfind ocamlc -package unix,bigarray,str,num,bytes,pa_sexp_conv,cmdliner,fd-send-recv,sha,cow,cow.syntax,unix-fcntl -I ../include -syntax camlp4o" $<
 fs_lr_parser.mli: fs_lr_parser.mly fs_ast.cmi
-	run_menhir $<
+	menhir --explain --infer --ocamlc "ocamlfind ocamlc -package unix,bigarray,str,num,bytes,pa_sexp_conv,pa_sexp_conv.syntax,cmdliner,fd-send-recv,sha,cow,cow.syntax,unix-fcntl -I ../include -syntax camlp4o" $<
 
 
 # following is a dummy rule so that make only runs menhir once
@@ -29,7 +34,7 @@ fs_lr_parser.mli: fs_lr_parser.mly fs_ast.cmi
 fs_lr_parser.ml: fs_lr_parser.mli ;
 
 fs_lr_parser.cmi: fs_lr_parser.mli fs_ast.cmi # fs_ast.cmi will already exist
-	$$ocamlc fs_lr_parser.mli
+	$$lib_ocamlc fs_lr_parser.mli
 
 fs_lexer.ml: fs_lexer.mll fs_lr_parser.cmi
 	ocamllex $<

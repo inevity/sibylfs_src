@@ -1,8 +1,8 @@
-SHELL:=/bin/bash
-
-# bash will read this config file first
-BASH_ENV=bash_env.sh
-export BASH_ENV
+#SHELL:=/bin/bash
+#
+## bash will read this config file first
+#BASH_ENV=bash_env.sh
+#export BASH_ENV
 
 ######################################## all, srcs, before_all
 all: before_all srcs
@@ -23,13 +23,13 @@ compile: $(xs)
 include .depend
 
 %.x: %.mli %.ml srcs
-	$$ocamlc -c $*.mli $*.ml
-	$$ocamlopt -c $*.mli $*.ml
+	$${lib_ocamlc} -c $*.mli $*.ml
+	$${lib_ocamlopt} -c $*.mli $*.ml
 	touch $@
 
 %.x: %.ml srcs
-	$$ocamlc -c $*.ml
-	$$ocamlopt -c $*.ml
+	$${lib_ocamlc} -c $*.ml
+	$${lib_ocamlopt} -c $*.ml
 	touch $@
 
 fs_check_lib.cma: $(xs)

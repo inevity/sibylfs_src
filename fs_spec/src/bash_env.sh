@@ -1,9 +1,12 @@
 set -a # export all vars
-# set -x # debug
+set -x # debug
+#echo env 
 
-root=$(realpath $(dirname $BASH_SOURCE))/../..
+#root=$(realpath $(dirname $BASH_SOURCE))/../..
+root=$(realpath $(dirname $BASH_SOURCE))/..
 
- # if using nix, this may not be present
+# if using nix, this may not be present
+# Herer, this lead not use this!!!
 test -f $root/config.sh && source $root/config.sh
 
 CPPO_ARGS="-D aspect_perms"

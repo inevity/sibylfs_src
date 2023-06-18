@@ -1,8 +1,28 @@
-SHELL:=/bin/bash
+#SHELL:=/bin/bash
+#VARS_OLD := $(.VARIABLES)
+
 
 # bash will read this config file first
-BASH_ENV=bash_env.sh
-export BASH_ENV
+#BASH_ENV=bash_env.sh
+#export BASH_ENV
+
+
+#export CPPO_ARGS:="-D aspect_perms"
+#
+##LEMLIB from nix env var
+#export LEMFLAGS:="-lib $LEMLIB -only_changed_output -wl_unused_vars ign -wl_rename err -wl_comp_message ign -wl_pat_exh ign"
+#export PKGS:="-package sexplib,sexplib.syntax,sha"
+#export SYNTAX:="-syntax camlp4o" # simplify: use for every file
+## 8~"pattern-matching is not exhaustive"; 
+## 11~"this match case is unused";
+## 26~"unused variable s2"
+#export WARN:="-w @f@p@u@s@40-8-11-26"
+## these include syntax, so should work on all files; may be overridden in ocamlc.sh
+#export   ocamlc:="$DISABLE_BYTE ocamlfind ocamlc   $WARN -I $EXTRACTDIR extract.cma  $PKGS $SYNTAX"
+#export ocamlopt:="$DISABLE_NTVE ocamlfind ocamlopt $WARN -I $EXTRACTDIR extract.cmxa $PKGS $SYNTAX"
+#export ocamldep:="ocamlfind ocamldep $PKGS"
+#export mk_cma:="$DISABLE_BYTE ocamlfind ocamlc"
+#export mk_cmxa:="$DISABLE_NTVE ocamlfind ocamlopt"
 
 # expect files to be linked in from ../Makefile
 all: stage1 
@@ -10,11 +30,36 @@ all: stage1
 
 FORCE:
 
+	#(for f in *.lem_cppo; do $$cppo $$CPPO_ARGS $$f -o $${f/.lem_cppo/.lem}; done)
+	#echo $$cppo 
+	#echo "1111" 
+	#(for f in *.lem_cppo; do $$cppo $$CPPO_ARGS $$f -o $${f/.lem_cppo/.lem}; done)
+	#(for f in *.lem_cppo; do ${cppo} ${CPPO_ARGS} $#f -o $${f/.lem_cppo/.lem}; done)
+#run_cppo: $(wildcard *.lem_cppo) 
+#run_cppo:  
+#(for f in *.lem_cppo; do ${cppo} ${CPPO_ARGS} $f -o ${f/.lem_cppo/.lem}; done)
+#run_cppo: $(wildcard *.lem_cppo) 
+#nix cannot access this var, env in the nix-store? no use the bash now ...
+#run_cppo: 
+#	${cppo}
+#	${cppo} t_dir_heap.lem_cppo -o t_dir_heap.lem   
+#	${cppo} t_fs_spec_fs_command_properties.lem_cppo -o t_fs_spec_fs_command_properties.lem
+#	${cppo} t_fs_spec.lem_cppo -o t_fs_spec.lem
+#	${cppo} t_fs_spec_properties_perms.lem_cppo -o t_fs_spec_properties_perms.lem
+
+# we have to invoke lem with the files in the right order
+	#echo "1111"
+	#echo $cppo;
+	# Put this at the point where you want to see the variable values
+#  $(foreach v,                                        \
+#        $(filter-out $(VARS_OLD) VARS_OLD,$(.VARIABLES)), \
+#        $(info $(v) = $($(v))))
+	#(for f in *.lem_cppo; do cppo $$CPPO_ARGS $$f -o $${f/.lem_cppo/.lem}; done)
+	#(for f in *.lem_cppo; do /nix/store/gdndpj78qb82lmcnwyhiy3i3ss0bas8q-cppon/bin/cppo $$CPPO_ARGS $$f -o $${f/.lem_cppo/.lem}; done)
+
 run_cppo: $(wildcard *.lem_cppo) 
 	(for f in *.lem_cppo; do $$cppo $$CPPO_ARGS $$f -o $${f/.lem_cppo/.lem}; done)
 	touch $@
-
-# we have to invoke lem with the files in the right order
 
 dot_lem:=\
 t_list_array.lem \

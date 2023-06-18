@@ -10,7 +10,7 @@ let
 
     mine = import (builtins.fetchGit {
          # Descriptive name to make the store path easier to identify                
-         name = "mine402";                                                 
+         name = "mine1402";                                                 
          url = "https://github.com/NixOS/nixpkgs/";                       
          ref = "refs/heads/nixpkgs-unstable";                     
          rev = "a5c9c6373aa35597cd5a17bc5c013ed0ca462cf0";                                           
@@ -52,6 +52,8 @@ in stdenv.mkDerivation {
     #  sha256 = "06fznyvgkgfxkwk60v499ifb74y0ip6p5wwggckj2fspp0ljnlyg";
     #};
     src = fetchgit {
+      # need   "unix-fcntl" {>= "0.2.0" & < "0.3.0"}
+      # this version is 0.3.2
       url = https://github.com/dsheets/ocaml-unix-fcntl.git;
       rev = "38c0953f7d24a02492bf7a93882f89964384dd5c"; # support unixerro 0.4.
       sha256 = "WLD7bw/RDc6GYeKFycJyrKHK5Ew1KGLtb0fgdOx3820=";

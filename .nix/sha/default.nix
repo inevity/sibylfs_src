@@ -1,12 +1,28 @@
 { }:
 let 
     pkgs = import <nixpkgs> {};
-    stdenv = pkgs.stdenv;
+    #stdenv = pkgs.stdenv;
     fetchurl = pkgs.fetchurl;
     fetchgithub = pkgs.fetchFromGitHub;
-    op = pkgs.ocaml-ng.ocamlPackages_4_02;
+    #op = pkgs.ocaml-ng.ocamlPackages_4_02;
+    #ocaml = op.ocaml;
+    ##findlib = pkgs.ocamlPackages.findlib; # needed?
+    #findlib = op.findlib;
+
+    minepkgs = import (builtins.fetchGit {
+         # Descriptive name to make the store path easier to identify                
+         name = "mine1402";                                                 
+         url = "https://github.com/NixOS/nixpkgs/";                       
+         ref = "refs/heads/nixpkgs-unstable";                     
+         rev = "a5c9c6373aa35597cd5a17bc5c013ed0ca462cf0";                                           
+     }) {};                                                                           
+     stdenv = minepkgs.stdenv;
+    findlib = minepkgs.ocamlPackages_4_02.findlib; # needed?
+    op = minepkgs.ocaml-ng.ocamlPackages_4_02;
     ocaml = op.ocaml;
-    findlib = pkgs.ocamlPackages.findlib; # needed?
+
+
+    #TODO add 4.02 env 
 in stdenv.mkDerivation {
     name = "ocaml_sha";
   
