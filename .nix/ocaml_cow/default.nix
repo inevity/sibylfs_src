@@ -34,10 +34,11 @@ let
     type_conv = mine.ocamlPackages_4_02.type_conv;
     cstruct = mine.ocamlPackages_4_02.cstruct;
     xmlm = mine.ocamlPackages_4_02.xmlm;
-    ocaml = mine.ocamlPackages_4_01_0.ocaml;
+    ocaml = mine.ocamlPackages_4_02.ocaml;
     opam = mine.opam;
     findlib = mine.ocamlPackages_4_02.findlib;
-    ocamlbuild = mine.ocamlPackages_4_01_0.ocamlbuild;
+    #ocamlbuild = mine.ocamlPackages_4_01_0.ocamlbuild;
+    ocamlbuild = mine.ocamlPackages_4_02.ocamlbuild;
 
     # use myself 
     #findlib = mine.ocamlPackages.findlib;
@@ -182,19 +183,39 @@ in stdenv.mkDerivation {
   #  substituteInPlace myocamlbuild.ml \
   #  --replace +camlp4 $out/lib/ocaml/${ocaml.version}/site-lib/camlp4
   #'';
+  prePatch = ''
+    substituteInPlace myocamlbuild.ml \
+    --replace +camlp4 ${camlp4}/lib/ocaml/${ocaml.version}/site-lib/camlp4
+  '';
   #preConfigure = ''
   #LD_LIBRARY_PATH="${cstruct}/lib/ocaml/${ocaml_version}/site-lib/cstruct";
   #prePatch = ''
   #  substituteInPlace myocamlbuild.ml \
   #  --replace '+camlp4' '+camlp4";A"-I"; A"+ocaml'  
   #'';
-  # now use, but need also dep need build with the 3.10
-  prePatch = ''
-    substituteInPlace myocamlbuild.ml \
-    --replace '+camlp4' '+camlp4";A"-I"; A"${ocaml}/lib/ocaml/'  
-  '';
+  ## now use, but need also dep need build with the 3.10
+  #prePatch = ''
+  #  substituteInPlace myocamlbuild.ml \
+  #  --replace "-I ${ocaml}/lib/ocaml" ""
+  #'';
+  ##prePatch = ''
+  ##  substituteInPlace myocamlbuild.ml \
+  ##  --replace "-I /nix/store/88v9p65qrv50y0iaigpfpfsbyjlxa4nn-ocaml-4.02.3/lib/ocaml/camlp4" ""
+  ##'';
+  #prePatch = ''
+  #  substituteInPlace myocamlbuild.ml \
+  #  --replace '-I"; A"+camlp4' ''
+  #'';
    configurePhase=''
    export PREFIX=$out
+   DESTDIR=$out ./cmd configure
+   '';
+   buildPhase=''
+   DESTDIR=$out ./cmd build
+   '';
+   preInstall = ''mkdir -p "$out/cow" '';
+   installPhase=''
+   DESTDIR=$out ./cmd install
    '';
    DESTDIR="$out";
    NIX_DEBUG = 6;
@@ -212,6 +233,7 @@ in stdenv.mkDerivation {
 # installPhase = ''
 #    ocaml setup.ml -install --prefix $out 
 #'';
+
 
     createFindlibDestdir = true;
 
