@@ -32,13 +32,12 @@ let
     }) {};                                                                           
 
     type_conv = mine.ocamlPackages_4_02.type_conv;
-    #cstruct = mine.ocamlPackages.ppx_cstruct;
     cstruct = mine.ocamlPackages_4_02.cstruct;
     xmlm = mine.ocamlPackages_4_02.xmlm;
-    ocaml = mine.ocamlPackages_4_02.ocaml;
+    ocaml = mine.ocamlPackages_4_01_0.ocaml;
     opam = mine.opam;
     findlib = mine.ocamlPackages_4_02.findlib;
-    ocamlbuild = mine.ocamlPackages_4_02.ocamlbuild;
+    ocamlbuild = mine.ocamlPackages_4_01_0.ocamlbuild;
 
     # use myself 
     #findlib = mine.ocamlPackages.findlib;
@@ -55,8 +54,8 @@ let
     omd = import ../omd { };
     ulex = import ../ulex { };
     #if build, will lead lem to link builit camle compiler why?
-   # camlp4 = import ../camlp4 {};
-    camlp4 = mine.ocamlPackages_4_02.camlp4;
+    camlp4 = import ../camlp4 {};
+   # camlp4 = mine.ocamlPackages_4_01_0.camlp4;
     #camlp4 = mine.ocamlPackages_4_02.camlp4_4_02;
     #camlp4 = mine.ocamlPackages.camlp4;
     #TODO use myself  
@@ -179,7 +178,24 @@ in stdenv.mkDerivation {
 #make
 #";
 #
-   configurePhase="export PREFIX=$out";
+  #preConfigure = ''
+  #  substituteInPlace myocamlbuild.ml \
+  #  --replace +camlp4 $out/lib/ocaml/${ocaml.version}/site-lib/camlp4
+  #'';
+  #preConfigure = ''
+  #LD_LIBRARY_PATH="${cstruct}/lib/ocaml/${ocaml_version}/site-lib/cstruct";
+  #prePatch = ''
+  #  substituteInPlace myocamlbuild.ml \
+  #  --replace '+camlp4' '+camlp4";A"-I"; A"+ocaml'  
+  #'';
+  # now use, but need also dep need build with the 3.10
+  prePatch = ''
+    substituteInPlace myocamlbuild.ml \
+    --replace '+camlp4' '+camlp4";A"-I"; A"${ocaml}/lib/ocaml/'  
+  '';
+   configurePhase=''
+   export PREFIX=$out
+   '';
    DESTDIR="$out";
    NIX_DEBUG = 6;
 #    installPhase="true";
