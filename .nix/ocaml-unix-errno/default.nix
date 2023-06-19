@@ -108,9 +108,13 @@ stdenv.mkDerivation {
 #/nix/store/cbjv2hp852999a1z258lrw1d853i8l9g-ocaml_ctypes/lib/ocaml/4.05.0/site-lib/ctypes/dllctypes_stubs.so
 #export LD_LIBRARY_PATH=${ctypes}/lib/ocaml/${ocaml_version}/site-lib/ctypes
 #TODO fix ctypes for 402
+   configurePhase ="true";
    buildPhase = "
 export LD_LIBRARY_PATH=${ctypes}/lib/ocaml/${ocaml_version}/site-lib/ctypes/
 make build
+";
+   installPhase = "
+  make install
 ";
 
     #rresult = rresult;

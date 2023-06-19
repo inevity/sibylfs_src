@@ -3,15 +3,19 @@
 # allow override in case not git repo
 
 # what if sibylfs_src is a subdir of a git repo?
-IN_GIT_DIR=`git status || echo false` 
-if [ "$IN_GIT_DIR" = "false" ]; then
-    if [ -z "$DIRTY"]; then DIRTY=true; fi
-    if [ -z "$GIT_REV" ]; then GIT_REV="unknown_git_rev"; fi
-else   
-    GIT_DIFF=`git diff-index --quiet HEAD || echo "dirty"`
-    if [ "$GIT_DIFF" = "dirty" ]; then DIRTY=true; else DIRTY=false; fi
-    if [ -z "$GIT_REV" ]; then GIT_REV=`git rev-parse HEAD | tr -d '\n'`; fi
-fi
+#IN_GIT_DIR=`git status || echo false` 
+IN_GIT_DIR="false" 
+DIRTY=true
+GIT_REV="unknown_git_rev"
+
+#if [ "$IN_GIT_DIR" = "false" ]; then
+#    if [ -z "$DIRTY"]; then DIRTY=true; fi
+#    if [ -z "$GIT_REV" ]; then GIT_REV="unknown_git_rev"; fi
+#else   
+#    GIT_DIFF=`git diff-index --quiet HEAD || echo "dirty"`
+#    if [ "$GIT_DIFF" = "dirty" ]; then DIRTY=true; else DIRTY=false; fi
+#    if [ -z "$GIT_REV" ]; then GIT_REV=`git rev-parse HEAD | tr -d '\n'`; fi
+#fi
 
 # note we don't force this to be rebuilt every time, but the sources
 # could change from clean to dirty

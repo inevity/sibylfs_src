@@ -1,7 +1,7 @@
 { }:
 let 
   pkgs = import <nixpkgs> {};
-  inherit (pkgs) fetchgit fetchFromGitHub;
+  inherit (pkgs) git fetchgit fetchFromGitHub;
   #op = pkgs.ocamlPackages;
   #inherit (op) findlib cppo sexplib cstruct;
   op = pkgs.ocaml-ng.ocamlPackages_4_02;
@@ -82,7 +82,7 @@ stdenv.mkDerivation {
   #buildInputs = [ ocaml findlib cppo sexplib sha ctypes cmdliner fd_send_recv 
   buildInputs = [ ocaml findlib cppo pa_sexp_conv sha ctypes cmdliner fd_send_recv 
     lem_in_nix pkgs.coreutils pkgs.git menhir cow ocaml-unix-fcntl 
-    ocaml-unix-errno fs_spec ]; # git for version num
+    ocaml-unix-errno  fs_spec git ]; # git for version num
 
   LEMLIB = "${lem_in_nix}/lem/library";
   LD_LIBRARY_PATH = "${cstruct}/lib/ocaml/${ocaml_version}/site-lib/cstruct";
@@ -143,9 +143,9 @@ stdenv.mkDerivation {
   #    ocamlc="ocamlfind ocamlc -w @f@p@u@s@40     -g  $PKGS -I $out/include extract.cma  fs_spec_lib.cma -syntax camlp4o";
   #  ocamlopt="ocamlfind ocamlopt -w @f@p@u@s@40   -g  $PKGS -I $out/include extract.cmxa fs_spec_lib.cmxa -syntax camlp4o";
   #  ocamldep="ocamlfind ocamldep $WARN $CCFLAGS $PKGS -I $out/include extract.cmxa fs_spec_lib.cmxa -syntax camlp4o $FCLXA";
-      ocamlc="ocamlfind ocamlc -w @f@p@u@s@40     -g -package unix,bigarray,str,num,bytes,pa_sexp_conv,pa_sexp_conv.syntax,cmdliner,fd-send-recv,sha,cow,cow.syntax,unix-fcntl -I $out/include extract.cma  fs_spec_lib.cma -syntax camlp4o";
-    ocamlopt="ocamlfind ocamlopt -w @f@p@u@s@40   -g -package unix,bigarray,str,num,bytes,pa_sexp_conv,pa_sexp_conv.syntax,cmdliner,fd-send-recv,sha,cow,cow.syntax,unix-fcntl -I $out/include extract.cmxa fs_spec_lib.cmxa -syntax camlp4o";
-    ocamldep="ocamlfind ocamldep -w @f@p@u@s@40 -g -package unix,bigarray,str,num,bytes,pa_sexp_conv,pa_sexp_conv.syntax,cmdliner,fd-send-recv,sha,cow,cow.syntax,unix-fcntl -I $out/include extract.cmxa fs_spec_lib.cmxa -syntax camlp4o $FCLXA";
+      ocamlc="ocamlfind ocamlc -w @f@p@u@s@40     -g -package unix,bigarray,str,num,bytes,pa_sexp_conv,pa_sexp_conv.syntax,cmdliner,fd-send-recv,sha,cow,cow.syntax,unix-fcntl,unix-errno -I $out/include extract.cma  fs_spec_lib.cma -syntax camlp4o";
+    ocamlopt="ocamlfind ocamlopt -w @f@p@u@s@40   -g -package unix,bigarray,str,num,bytes,pa_sexp_conv,pa_sexp_conv.syntax,cmdliner,fd-send-recv,sha,cow,cow.syntax,unix-fcntl,unix-errno -I $out/include extract.cmxa fs_spec_lib.cmxa -syntax camlp4o";
+    ocamldep="ocamlfind ocamldep -w @f@p@u@s@40 -g -package unix,bigarray,str,num,bytes,pa_sexp_conv,pa_sexp_conv.syntax,cmdliner,fd-send-recv,sha,cow,cow.syntax,unix-fcntl,unix-errno -I $out/include extract.cmxa fs_spec_lib.cmxa -syntax camlp4o $FCLXA";
     
     #mk_native="$ocamlopt $WITH_FS_CHECK_LIB $out/lib/syscall_stubs.o";
     mk_native="$ocamlopt -I $out/lib fs_check_lib.cmxa $out/lib/syscall_stubs.o";
@@ -170,9 +170,9 @@ stdenv.mkDerivation {
    # lib_ocamlc="ocamlfind ocamlc   $WARN $CCFLAGS $PKGS -I ../include fs_spec_lib.cma  $SYNTAX";
    # lib_ocamlopt="ocamlfind ocamlopt $WARN $CCFLAGS $PKGS -I ../include fs_spec_lib.cmxa $SYNTAX";
     #lib_ocamlc="ocamlfind ocamlc -w @f@p@u@s@40     -g  $PKGS -I ../include   fs_spec_lib.cma -syntax camlp4o";
-    lib_ocamlc="ocamlfind ocamlc -w @f@p@u@s@40     -g  -package unix,bigarray,str,num,bytes,pa_sexp_conv,pa_sexp_conv.syntax,cmdliner,fd-send-recv,sha,cow,cow.syntax,unix-fcntl -I ../include   fs_spec_lib.cma -syntax camlp4o";
+    lib_ocamlc="ocamlfind ocamlc -w @f@p@u@s@40     -g  -package unix,bigarray,str,num,bytes,pa_sexp_conv,pa_sexp_conv.syntax,cmdliner,fd-send-recv,sha,cow,cow.syntax,unix-fcntl,unix-errno -I ../include   fs_spec_lib.cma -syntax camlp4o";
     #lib_ocamlopt="ocamlfind ocamlopt -w @f@p@u@s@40   -g  $PKGS -I ../include fs_spec_lib.cmxa -syntax camlp4o";
-    lib_ocamlopt="ocamlfind ocamlopt -w @f@p@u@s@40   -g -package unix,bigarray,str,num,bytes,pa_sexp_conv,pa_sexp_conv.syntax,cmdliner,fd-send-recv,sha,cow,cow.syntax,unix-fcntl -I ../include fs_spec_lib.cmxa -syntax camlp4o";
+    lib_ocamlopt="ocamlfind ocamlopt -w @f@p@u@s@40   -g -package unix,bigarray,str,num,bytes,pa_sexp_conv,pa_sexp_conv.syntax,cmdliner,fd-send-recv,sha,cow,cow.syntax,unix-fcntl,unix-errno -I ../include fs_spec_lib.cmxa -syntax camlp4o";
     
     mk_cma="ocamlfind ocamlc";
     mk_cmxa="ocamlfind ocamlopt";
@@ -182,6 +182,16 @@ stdenv.mkDerivation {
    #     menhir --explain --infer --ocamlc "ocamlfind ocamlc $PKGS -I ../include $SYNTAX" $@
    #     menhir --explain --infer --ocamlc "ocamlfind ocamlc -package unix,bigarray,str,num,bytes,sexplib,sexplib.syntax,cmdliner,fd-send-recv,sha,cow,cow.syntax,unix-fcntl -I ../include -syntax camlp4o" $@
    # }
+  #debug_ocamlc="$DISABLE_BYTE ocamlfind ocamlc   $WARN $CCFLAGS $PKGS -I $BASH_DIR/include extract.cma  fs_spec_lib.cma $SYNTAX $WITH_FS_CHECK_LIB"
+  #debug_ocamlopt="$DISABLE_NTVE ocamlfind ocamlopt $WARN $CCFLAGS $PKGS -I $BASH_DIR/include extract.cmxa fs_spec_lib.cmxa $SYNTAX $WITH_FS_CHECK_LIB"
+  #TODO fs_check_lib.cmxa do what?
+#  debug_ocamlc="ocamlfind ocamlc  -w @f@p@u@s@40   -g -package unix,bigarray,str,num,bytes,pa_sexp_conv,pa_sexp_conv.syntax,cmdliner,fd-send-recv,sha,cow,cow.syntax,unix-fcntl,unix-errno     -I ../../include extract.cma  fs_spec_lib.cma  -I $out/lib fs_check_lib.cmxa -syntax camlp4o";
+#  debug_ocamlopt="ocamlfind ocamlopt -w @f@p@u@s@40   -g -package unix,bigarray,str,num,bytes,pa_sexp_conv,pa_sexp_conv.syntax,cmdliner,fd-send-recv,sha,cow,cow.syntax,unix-fcntl,unix-errno  -I ../../include extract.cmxa fs_spec_lib.cmxa -I $out/lib fs_check_lib.cmxa -syntax camlp4o";
+  debug_ocamlc="ocamlfind ocamlc  -w @f@p@u@s@40   -g -package unix,bigarray,str,num,bytes,pa_sexp_conv,pa_sexp_conv.syntax,cmdliner,fd-send-recv,sha,cow,cow.syntax,unix-fcntl,unix-errno     -I ../../include extract.cma  fs_spec_lib.cma  -I $out/lib -syntax camlp4o";
+  debug_ocamlopt="ocamlfind ocamlopt -w @f@p@u@s@40   -g -package unix,bigarray,str,num,bytes,pa_sexp_conv,pa_sexp_conv.syntax,cmdliner,fd-send-recv,sha,cow,cow.syntax,unix-fcntl,unix-errno  -I ../../include extract.cmxa fs_spec_lib.cmxa -I $out/lib -syntax camlp4o";
+  #debug_ocamlc="ocamlfind ocamlc  -w @f@p@u@s@40   -g -package unix,bigarray,str,num,bytes,pa_sexp_conv,pa_sexp_conv.syntax,cmdliner,fd-send-recv,sha,cow,cow.syntax,unix-fcntl,unix-errno     -I ../../include extract.cma  fs_spec_lib.cma -I $out/lib fs_check_lib.cmxa ";
+  #debug_ocamlopt="ocamlfind ocamlopt -w @f@p@u@s@40   -g -package unix,bigarray,str,num,bytes,pa_sexp_conv,pa_sexp_conv.syntax,cmdliner,fd-send-recv,sha,cow,cow.syntax,unix-fcntl,unix-errno  -I ../../include extract.cmxa fs_spec_lib.cmxa -syntax camlp4o -I $out/lib fs_check_lib.cmxa";
+  #    
       
   buildPhase = ''
     export GIT_REV="$out"
